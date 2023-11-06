@@ -3,9 +3,6 @@
 
 
 int main() {
-    /*
-     * Perubahan :
-     */
 
     std::string command[6] = {
             "1. Pesan Makanan",
@@ -15,13 +12,13 @@ int main() {
             "5. Hapus Pesanan",
             "6. [ADMIN] Tambah Menu Baru"
     };
-    std::string makanan[30], minuman[30];           //List Menu
-    float harga_makanan[30], harga_minuman[30];     //List Harga Menu
-    int pesanan_makanan[30], pesanan_minuman[30];   //List pesanan
-    int n_makanan = 3;                              //Jumlah Makanan di Menu
-    int n_minuman = 3;                              //Jumlah Minuman di Menu
-    int n_pesan_makanan = 0;                        //Pesanan makanan ke-[List pesanan makanan]
-    int n_pesan_minuman = 0;                        //Pesanan makanan ke-[List pesanan minuman]
+    std::string makanan[30], minuman[30];           //List Menu (Danial)
+    float harga_makanan[30], harga_minuman[30];     //List Harga Menu (Danial)
+    int pesanan_makanan[30], pesanan_minuman[30];   //List pesanan (Danial)
+    int n_makanan = 3;                              //Jumlah Makanan di Menu (Danial)
+    int n_minuman = 3;                              //Jumlah Minuman di Menu (Danial)
+    int n_pesan_makanan = 0;                        //Pesanan makanan ke-[List pesanan makanan] (Danial)
+    int n_pesan_minuman = 0;                        //Pesanan makanan ke-[List pesanan minuman] (Danial)
     makanan[0] = "Sop Buntut";
     makanan[1] = "Nasi Goreng";
     makanan[2] = "Bebek Bakar";
@@ -38,11 +35,8 @@ int main() {
     bool is_lanjut = true;
     int i, pilih;
     float total_pesanan;
-    float placeholderHarga;
     std::string placeholderNama;
-    bool tambahMenuBaru = true;
-    bool tambahMinuman = true;
-    bool tambahMakanan = true;
+    bool tambahMenuBaru;
     while (is_lanjut) {
 
         //--------------------------------------------------------------------------------------------------------------
@@ -50,14 +44,14 @@ int main() {
         {
             std::cout << command[i] << std::endl;
         }
-        //Menunjukan list command (ln:8)
+        //Menunjukan list command (ln:8) (Danial)
         //--------------------------------------------------------------------------------------------------------------
 
         //--------------------------------------------------------------------------------------------------------------
         std::cout << "Pilih Menu: ";
         std::cin >> pilih;
         std::cout << '\n';
-        //Input user sesuai dengan command yang dijalankan (ln:8)
+        //Input user sesuai dengan command yang dijalankan (ln:8) (Danial)
         //--------------------------------------------------------------------------------------------------------------
 
         switch (pilih) {
@@ -67,7 +61,7 @@ int main() {
                 for (i = 0; i < n_makanan; i++) {
                     std::cout << makanan[i] << " (kode: " << i << ")\n";
                 }
-                //Loop diatas akan output list menu makanan ke console
+                //Loop diatas akan output list menu makanan ke console (Danial)
                 std::cout << "-----------------------\n";
                 std::cout << "Input kode: ";
                 std::cin >> pesanan_makanan[n_pesan_makanan];
@@ -112,10 +106,11 @@ int main() {
                 is_lanjut = false;
                 break;
             case 5:
-                //Hapus pesanan
+                //Hapus pesanan (Danial)
             case 6:
-                //Tambah menu baru
+                //Tambah menu baru (Danial)
                 int selection;
+                tambahMenuBaru = true;
                 while(tambahMenuBaru)
                 {
                     std::cout<<"Menu apa yang ingin anda tambahkan?\n1. Menu makanan\n2. Menu minuman\nInput: \n";
@@ -124,7 +119,27 @@ int main() {
                     switch(selection)
                     {
                         case 1:
-                            std::cout<<"Apa nama menu makanan baru yang akan anda tambahkan?\n";
+                            n_makanan++;
+                            std::cout<<"Apa nama menu makanan baru yang akan anda tambahkan?";
+                            //Getline itu kayak std::cin tapi lebih dari satu kata (Danial)
+                            std::getline(std::cin, makanan[n_makanan-1]);                    // Entah kenapa kalo std::getline nya itu cuman satu doang
+                            std::getline(std::cin, makanan[n_makanan-1]);                    // bakal ngeskip input nama makanannya dan langsung minta
+                                                                                                    //  harga makanan dari user
+                                                                                                    //  Ini aku tau solusinya adalah pake std::getline nya dua
+                                                                                                    //  kali gara-gara dibantu kakak ku yang udah lulus ilkom UI
+                                                                                                    //  Katanya ini emang keterbatasan bahasa kayak C++/C/JAVA
+                                                                                                    //  C++ berawal di linux, dan karena ngoding aku pake windows
+                                                                                                    //  alhasil ada beberapa kesalahan dari bahasanya karena
+                                                                                                    //  tidak 100% compatible dengan windows
+                                                                                                    //  Kata kakak saya, programmer jaman sekarang namain
+                                                                                                    //  Jebakan ilkom kayak begini "C++ Gotcha"
+                                                                                                    //  dan cenderung ini yang bikin banyak dropout.
+                                                                                                    //      ~Danial
+                            std::cout<<"Berapa harga satuan dari "<<makanan[n_makanan-1]<<"?";
+                            std::cin>>harga_makanan[n_makanan-1];
+                            std::cout<<'\n';
+                            tambahMenuBaru = false;
+                            break;
                             //  Kalau pake std::cin >> makanan[n_makanan-1];
                             //  Cuman ngeread kata pertamanya
                             //  Kata keduanya kagak masuk variabel, tapi masuk "input buffer"
@@ -132,25 +147,16 @@ int main() {
                             //  dan langsung masukin yang ada di input buffer ke harga_makanan[n_makanan-1]
                             //  Tapi karena nilai harga_makanan[n_makanan-1] itu integer, bukan string
                             //  Hasilnya harga_makanan[n_makanan-1] = 0
-                            std::cin >> placeholderNama;
-                            std::cout<<"Berapa harga satuan dari "<<placeholderNama<<"?\n";
-                            std::cin>>placeholderHarga;
-                            std::cout<<'\n';
-                            n_makanan++;
-                            makanan[n_makanan-1] = placeholderNama;
-                            harga_makanan[n_makanan-1] = placeholderHarga;
-                            tambahMenuBaru = false;
-                            break;
+                            //     ~(Danial)
                         case 2:
-                            std::cout<<"Apa nama menu minuman baru yang akan anda tambahkan?\n";
-                            std::getline(std::cin, placeholderNama);
-                            std::getline(std::cin, placeholderNama);
-                            std::cout<<"Berapa harga satuan dari "<<placeholderNama<<"?\n";
-                            std::cin>>placeholderHarga;
-                            std::cout<<'\n';
+                            //Kasus yang sama disini, tapi untuk yang minuman
                             n_minuman++;
-                            minuman[n_minuman-1] = placeholderNama;
-                            harga_minuman[n_minuman-1] = placeholderHarga;
+                            std::cout<<"Apa nama menu minuman baru yang akan anda tambahkan?";
+                            std::getline(std::cin, minuman[n_minuman-1]);
+                            std::getline(std::cin, minuman[n_minuman-1]);
+                            std::cout<<"Berapa harga satuan dari "<<minuman[n_minuman-1]<<"?";
+                            std::cin>>harga_minuman[n_minuman-1];
+                            std::cout<<'\n';
                             tambahMenuBaru = false;
                             break;
                         default:
