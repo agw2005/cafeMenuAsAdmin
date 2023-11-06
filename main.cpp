@@ -1,112 +1,100 @@
 #include <iostream>
-#include <vector>
 
 int main() {
-    std::vector<std::string> chosen = {};
+    /*
+     * Perubahan :
+     */
 
-    std::string menuAll[10] = {
-            "Salad",
-            "Biscuits",
-            "Croissant",
-            "Pancake",
-            "Oatmeal",
-            "Cappuccino",
-            "Latte",
-            "Espresso",
-            "Iced Tea",
-            "Plain Water"
+    std::string command[6] = {
+            "1. Pesan Makanan",
+            "2. Pesan Minuman",
+            "3. Rekap Pesanan",
+            "4. Exit",
+            "5. Hapus Pesanan",
+            "6. [ADMIN] Tambah Menu Baru"
     };
-    std::string menuFoodInterface[5] = {
-            "1. Salad - 8.00 USD",
-            "2. Biscuits - 2.50 USD",
-            "3. Croissant - 3.00 USD",
-            "4. Pancake - 6.00 USD",
-            "5. Oatmeal - 5.00 USD"
-    };
-    float priceFood[5] = {
-            8.0,
-            2.5,
-            3.0,
-            6.0,
-            5.0
-    };
-    std::string menuDrinkInterface[5] = {
-            "1. Cappuccino - 3.50 USD",
-            "2. Latte - 3.75 USD",
-            "3. Espresso - 2.50 USD",
-            "4. Iced Tea - 2.50 USD",
-            "5. Plain Water - 1.00 USD"
-    };
-    float priceDrink[5] = {
-            3.5,
-            3.75,
-            2.5,
-            2.5,
-            1.0
-    };
-    std::string interface[9] = {
-            "1. Add a drink",
-            "2. Add a food",
-            "3. Check total price",
-            "4. Remove a selection",
-            "5. Checkout"
-    };
+    std::string makanan[30], minuman[30];           //Menu
+    float harga_makanan[30], harga_minuman[30];     //Harga
+    int pesanan_makanan[30], pesanan_minuman[30];
+    int n_makanan = 3;                              //Jumlah Makanan di Menu
+    int n_minuman = 3;                              //Jumlah Minuman di Menu
+    int n_pesan_makanan = 0;
+    int n_pesan_minuman = 0;
+    makanan[0] = "Sop Buntut";
+    makanan[1] = "Nasi Goreng";
+    makanan[2] = "Bebek Bakar";
+    minuman[0] = "Strawberry Squash";
+    minuman[1] = "Orange Juice";
+    minuman[2] = "Lemon Tea";
+    harga_makanan[0] = 45000;
+    harga_makanan[1] = 20000;
+    harga_makanan[2] = 40000;
+    harga_minuman[0] = 7000;
+    harga_minuman[1] = 15000;
+    harga_minuman[2] = 7000;
 
-    float sumPrice = 0.0f;
-    int exit = 1;
-    std::cout<<"Good morning, how may i assist you today?"<<std::endl;
-    while(exit == 1){
-        int n;
-        for(int i = 0 ; i < sizeof(interface)/sizeof(std::string) ; i++){
-            std::cout<<interface[i]<<std::endl;
+    bool is_lanjut = true;
+    int i, pilih;
+    float total_pesanan;
+    while (is_lanjut) {
+        for (i = 0; i < sizeof(command)/sizeof(std::string); i++) {
+            std::cout << command[i] << std::endl;
         }
-        std::cin>>n;
-        int selection;
-        switch(n){
+        std::cout << "Pilih Menu: ";
+        std::cin >> pilih;
+        std::cout << '\n';
+        switch (pilih) {
             case 1:
-                std::cout<<"Please choose a drink from the following menu by entering their assigned number:\n";
-                for(int i = 0 ; i < sizeof(menuDrinkInterface)/sizeof(std::string) ; i++){
-                    std::cout<<menuDrinkInterface[i]<<std::endl;
+                std::cout << "-----------------------\n";
+                for (i = 0; i < n_makanan; i++) {
+                    std::cout << makanan[i] << " (kode: " << i << ")\n";
                 }
-                std::cin>>selection;
-                sumPrice += priceDrink[selection-1];
-                chosen.push_back(menuAll[selection+4]);
-                std::cout<<"Process successfully done, is there anything else you'd like to do?\n";
+                std::cout << "-----------------------\n";
+                std::cout << "Input kode: ";
+                std::cin >> pesanan_makanan[n_pesan_makanan];
+                std::cout << '\n';
+                n_pesan_makanan++;
                 break;
             case 2:
-                std::cout<<"Please choose a food from the following menu by entering their assigned number:\n";
-                for(int i = 0 ; i < sizeof(menuFoodInterface)/sizeof(std::string) ; i++){
-                    std::cout<<menuFoodInterface[i]<<std::endl;
+                std::cout << "-----------------------\n";
+                for (i = 0; i < n_minuman; i++) {
+                    std::cout << minuman[i] << " (kode: " << i << ")\n";
                 }
-                std::cin>>selection;
-                sumPrice += priceFood[selection-1];
-                chosen.push_back(menuAll[selection-1]);
-                std::cout<<"Process successfully done, is there anything else you'd like to do?\n";
+                std::cout << "-----------------------\n";
+                std::cout << "Input kode: ";
+                std::cin >> pesanan_minuman[n_pesan_minuman];
+                std::cout << '\n';
+                n_pesan_minuman++;
                 break;
             case 3:
-                std::cout<<"Your total price would be: "<<sumPrice<<" USD\n";
-                std::cout<<"Process successfully done, is there anything else you'd like to do?\n";
+                total_pesanan = 0;
+                std::cout << "----------makanan-------------\n";
+                for (i = 0; i < n_pesan_makanan; i++) {
+                    std::cout << makanan[pesanan_makanan[i]];
+                    std::cout << " (harga: ";
+                    std::cout << harga_makanan[pesanan_makanan[i]];
+                    std::cout << ")\n";
+                    total_pesanan += harga_makanan[pesanan_makanan[i]];
+                }
+                std::cout << "----------minuman-------------\n";
+                for (i = 0; i < n_pesan_minuman; i++) {
+                    std::cout << minuman[pesanan_minuman[i]];
+                    std::cout << " (harga: ";
+                    std::cout << harga_minuman[pesanan_minuman[i]];
+                    std::cout << ")\n";
+                    total_pesanan += harga_minuman[pesanan_minuman[i]];
+                }
+                std::cout << "-----------total--------------\n";
+                std::cout << "Total: " << total_pesanan << std::endl;
+                std::cout << "------------------------------\n";
                 break;
             case 4:
-                if(chosen.size() == 0)
-                {
-                    std::cout<<"There is no selected items yet\n";
-                    break;
-                }
-                for(int i = 0 ; i < chosen.size() ; i++){
-                    std::cout<<i+1<<". "<<chosen[i]<<std::endl;
-                }
-                std::cout<<"Which item do you wish to remove?\n";
-                std::cin>>selection;
-                chosen.erase(chosen.begin()+(selection-1));
-                std::cout<<"Process successfully done, is there anything else you'd like to do?\n";
+                is_lanjut = false;
                 break;
             case 5:
-                exit = 0;
-                std::cout<<"Checkout completed, exiting...";
-                break;
+                //
             default:
-                std::cout<<"The input you have entered is undefined, please try again\n";
+                std::cout<<"Input yang anda masukan tidak terdefinisi, silahkan coba lagi.\n";
                 break;
         }
     }
