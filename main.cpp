@@ -118,42 +118,36 @@ int main() {
                 int selection;
                 while(tambahMenuBaru)
                 {
-                    std::cout<<"Menu apa yang ingin anda tambahkan?\n1. Menu makanan\n2. Menu minuman\nInput: ";
+                    std::cout<<"Menu apa yang ingin anda tambahkan?\n1. Menu makanan\n2. Menu minuman\nInput: \n";
                     std::cin>>selection;
                     std::cout<<'\n';
                     switch(selection)
                     {
                         case 1:
+                            std::cout<<"Apa nama menu makanan baru yang akan anda tambahkan?\n";
+                            //  Kalau pake std::cin >> makanan[n_makanan-1];
+                            //  Cuman ngeread kata pertamanya
+                            //  Kata keduanya kagak masuk variabel, tapi masuk "input buffer"
+                            //  Karena ada input buffer, bakal ngeskip pertanyaan "berapa harga satuan"
+                            //  dan langsung masukin yang ada di input buffer ke harga_makanan[n_makanan-1]
+                            //  Tapi karena nilai harga_makanan[n_makanan-1] itu integer, bukan string
+                            //  Hasilnya harga_makanan[n_makanan-1] = 0
+                            std::cin >> placeholderNama;
+                            std::cout<<"Berapa harga satuan dari "<<placeholderNama<<"?\n";
+                            std::cin>>placeholderHarga;
+                            std::cout<<'\n';
                             n_makanan++;
-                            while (tambahMakanan)
-                            {
-                                std::cout<<"Apa nama menu makanan baru yang akan anda tambahkan?";
-                                //  Kalau pake std::cin >> makanan[n_makanan-1];
-                                //  Cuman ngeread kata pertamanya
-                                //  Kata keduanya kagak masuk variabel, tapi masuk "input buffer"
-                                //  Karena ada input buffer, bakal ngeskip pertanyaan "berapa harga satuan"
-                                //  dan langsung masukin yang ada di input buffer ke harga_makanan[n_makanan-1]
-                                //  Tapi karena nilai harga_makanan[n_makanan-1] itu integer, bukan string
-                                //  Hasilnya harga_makanan[n_makanan-1] = 0
-                                std::cin >> makanan[n_makanan-1];
-                                std::cout<<"Berapa harga satuan dari "<<makanan[n_makanan-1]<<"?\n";
-                                std::cin>>harga_makanan[n_makanan-1];
-                                std::cout<<'\n';
-                                tambahMakanan = false;
-                            }
+                            makanan[n_makanan-1] = placeholderNama;
+                            harga_makanan[n_makanan-1] = placeholderHarga;
                             tambahMenuBaru = false;
                             break;
                         case 2:
-                            while (tambahMinuman)
-                            {
-                                std::cout<<"Apa nama menu minuman baru yang akan anda tambahkan?\n";
-                                std::getline(std::cin, placeholderNama);
-                                std::cout<<'\n';
-                                std::cout<<"Berapa harga satuan dari "<<placeholderNama<<"?\n";
-                                std::cin>>placeholderHarga;
-                                std::cout<<'\n';
-                                tambahMinuman = false;
-                            }
+                            std::cout<<"Apa nama menu minuman baru yang akan anda tambahkan?\n";
+                            std::getline(std::cin, placeholderNama);
+                            std::getline(std::cin, placeholderNama);
+                            std::cout<<"Berapa harga satuan dari "<<placeholderNama<<"?\n";
+                            std::cin>>placeholderHarga;
+                            std::cout<<'\n';
                             n_minuman++;
                             minuman[n_minuman-1] = placeholderNama;
                             harga_minuman[n_minuman-1] = placeholderHarga;
