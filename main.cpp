@@ -19,6 +19,7 @@ int main() {
     int n_minuman = 3;                              //Jumlah Minuman di Menu (Danial)
     int n_pesan_makanan = 0;                        //Pesanan makanan ke-[List pesanan makanan] (Danial)
     int n_pesan_minuman = 0;                        //Pesanan makanan ke-[List pesanan minuman] (Danial)
+    makanan[-1] = "[Deleted]  ";
     makanan[0] = "Sop Buntut";
     makanan[1] = "Nasi Goreng";
     makanan[2] = "Bebek Bakar";
@@ -34,7 +35,7 @@ int main() {
 
     bool is_lanjut = true;
     int i, pilih;
-    float total_pesanan;
+    float total_pesanan;            //Total harga saat rekap
     std::string placeholderNama;
     bool tambahMenuBaru;
     while (is_lanjut) {
@@ -100,13 +101,27 @@ int main() {
                 }
                 std::cout << "-----------total--------------\n";
                 std::cout << "Total: " << total_pesanan << std::endl;
-                std::cout << "------------------------------\n";
+                std::cout << "------------------------------\n\n";
                 break;
             case 4:
                 is_lanjut = false;
                 break;
             case 5:
                 //Hapus pesanan (Danial)
+                int seleksiHapus;
+                //for(int iterationJumlahPesananMakanan = 0 ; iterationJumlahPesananMakanan < n_pesan_makanan ; iterationJumlahPesananMakanan++){
+                //    std::cout<<iterationJumlahPesananMakanan+1<<". "<<pesanan_makanan[iterationJumlahPesananMakanan]<<'\n';
+                //}
+                for (i = 0; i < n_pesan_makanan; i++) {
+                    std::cout << i+1 << ". " << makanan[pesanan_makanan[i]] << " (Kode: "<< i << ")\n";
+                }
+                std::cout<<"Pesanan mana yang ingin anda hapus?\n";
+                std::cout << "Input kode: ";
+                std::cin>>seleksiHapus;
+                pesanan_makanan[seleksiHapus] = -1;
+                std::cout << '\n';
+                //Array makanan[-1] maybe out of bound (Not good practice) (Danial)
+                break;
             case 6:
                 //Tambah menu baru (Danial)
                 int selection;
