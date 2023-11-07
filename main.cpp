@@ -39,11 +39,12 @@ int main() {
     harga_minuman[2] = 7000;
 
     bool is_lanjut = true;
-    bool kondisiHapus;
-    int i, pilih;
-    int seleksiHapus;
+    bool kondisiHapus,kondisiUbahNama, kondisiUbahHarga;
+    int i, pilih, selectionUbahNama,menuYangInginDiubah;
+    int seleksiHapus,selectionUbahHarga,hargaYangInginDiubah;
     float total_pesanan;            //Total harga saat rekap
-    std::string placeholderNama;
+    float hargaBaru;
+    std::string placeholderNama,namaBaru;
     bool tambahMenuBaru;
     while (is_lanjut) {
 
@@ -213,7 +214,103 @@ int main() {
                 }
                 break;
             case 7:
+                //Ubah nama (Danial)
+                kondisiUbahNama = true;
+                while(kondisiUbahNama)
+                {
+                    std::cout<<"Anda ingin mengubah nama menu makanan atau minuman?\n1. Menu makanan\n2. Menu minuman\nInput: ";
+                    std::cin>>selectionUbahNama;
+                    if(selectionUbahNama == 1)
+                    {
+                        std::cout << "----------------------------------------\n";
+                        for (i = 0; i < n_makanan; i++) {
+                            std::cout << i+1 << ". " << makanan[i] << "\n";
+                        }
+                        //Loop diatas akan output list menu makanan ke console (Danial)
+                        std::cout << "----------------------------------------\n";
+                        std::cout << "Makanan yang ingin diubah: ";
+                        std::cin>>menuYangInginDiubah;
+                        std::cout<<'\n';
+                        std::cout << "Masukan nama baru makanan tersebut: ";
+                        std::getline(std::cin, namaBaru);
+                        std::getline(std::cin, namaBaru);
+                        std::cout<<'\n';
+                        makanan[menuYangInginDiubah-1] = namaBaru;
+                        kondisiUbahNama = false;
+                    }
+                    else if(selectionUbahNama == 2)
+                    {
+                        std::cout << "----------------------------------------\n";
+                        for (i = 0; i < n_minuman; i++) {
+                            std::cout << i+1 << ". " << minuman[i] << "\n";
+                        }
+                        //Loop diatas akan output list menu minuman ke console (Danial)
+                        std::cout << "----------------------------------------\n";
+                        std::cout << "Minuman yang ingin diubah: ";
+                        std::cin>>menuYangInginDiubah;
+                        std::cout<<'\n';
+                        std::cout << "Masukan nama baru minuman tersebut: ";
+                        std::getline(std::cin, namaBaru);
+                        std::getline(std::cin, namaBaru);
+                        std::cout<<'\n';
+                        minuman[menuYangInginDiubah-1] = namaBaru;
+                        kondisiUbahNama = false;
+                    }
+                    else
+                    {
+                        std::cout<<"Input yang anda masukan tidak terdefinisi, silahkan coba lagi.\n";
+                        kondisiUbahNama = true;
+                    }
+                }
+                break;
             case 8:
+                //Ubah harga (Danial)
+                kondisiUbahHarga = true;
+                while(kondisiUbahHarga)
+                {
+                    std::cout<<"Anda ingin mengubah nama menu makanan atau minuman?\n1. Menu makanan\n2. Menu minuman\nInput: ";
+                    std::cin>>selectionUbahHarga;
+                    if(selectionUbahHarga == 1)
+                    {
+                        std::cout << "----------------------------------------\n";
+                        for (i = 0; i < n_makanan; i++) {
+                            std::cout << i+1 << ". " << makanan[i] << " (" <<harga_makanan[i]<< ")\n";
+                        }
+                        //Loop diatas akan output list menu makanan ke console (Danial)
+                        std::cout << "----------------------------------------\n";
+                        std::cout << "Makanan yang ingin diubah harganya: ";
+                        std::cin>>hargaYangInginDiubah;
+                        std::cout<<'\n';
+                        std::cout << "Masukan harga baru makanan tersebut: ";
+                        std::cin>>hargaBaru;
+                        std::cout<<'\n';
+                        harga_makanan[hargaYangInginDiubah-1] = hargaBaru;
+                        kondisiUbahHarga = false;
+                    }
+                    else if(selectionUbahHarga == 2)
+                    {
+                        std::cout << "----------------------------------------\n";
+                        for (i = 0; i < n_minuman; i++) {
+                            std::cout << i+1 << ". " << minuman[i] << " (" <<harga_minuman[i]<< ")\n";
+                        }
+                        //Loop diatas akan output list menu minuman ke console (Danial)
+                        std::cout << "----------------------------------------\n";
+                        std::cout << "Minuman yang ingin diubah harganya: ";
+                        std::cin>>hargaYangInginDiubah;
+                        std::cout<<'\n';
+                        std::cout << "Masukan harga baru minuman tersebut: ";
+                        std::cin>>hargaBaru;
+                        std::cout<<'\n';
+                        harga_minuman[+1] = hargaBaru;
+                        kondisiUbahHarga = false;
+                    }
+                    else
+                    {
+                        std::cout<<"Input yang anda masukan tidak terdefinisi, silahkan coba lagi.\n";
+                        kondisiUbahHarga = true;
+                    }
+                }
+                break;
             default:
                 std::cout<<"Input yang anda masukan tidak terdefinisi, silahkan coba lagi.\n";
                 break;
