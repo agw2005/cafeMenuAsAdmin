@@ -4,13 +4,15 @@
 
 int main() {
 
-    std::string command[6] = {
+    std::string command[8] = {
             "1. Pesan Makanan",
             "2. Pesan Minuman",
             "3. Rekap Pesanan",
             "4. Exit",
             "5. Hapus Pesanan",
-            "6. [ADMIN] Tambah Menu Baru"
+            "6. [ADMIN] Tambah Menu Baru",
+            "7. [ADMIN] Ubah nama menu",
+            "8. [ADMIN] Ubah harga menu"
     };
     std::string makanan[30], minuman[30];           //List Menu (Danial)
     float harga_makanan[30], harga_minuman[30];     //List Harga Menu (Danial)
@@ -19,22 +21,27 @@ int main() {
     int n_minuman = 3;                              //Jumlah Minuman di Menu (Danial)
     int n_pesan_makanan = 0;                        //Pesanan makanan ke-[List pesanan makanan] (Danial)
     int n_pesan_minuman = 0;                        //Pesanan makanan ke-[List pesanan minuman] (Danial)
-    makanan[-1] = "[Deleted]  ";
-    makanan[0] = "Sop Buntut";
-    makanan[1] = "Nasi Goreng";
-    makanan[2] = "Bebek Bakar";
+    makanan[29] = "[Deleted]        ";
+    makanan[0] = "Sop Buntut       ";
+    makanan[1] = "Nasi Goreng      ";
+    makanan[2] = "Bebek Bakar      ";
+    minuman[29] = "[Deleted]        ";
     minuman[0] = "Strawberry Squash";
-    minuman[1] = "Orange Juice";
-    minuman[2] = "Lemon Tea";
+    minuman[1] = "Orange Juice     ";
+    minuman[2] = "Lemon Tea        ";
+    harga_makanan[29] = 0;
     harga_makanan[0] = 45000;
     harga_makanan[1] = 20000;
     harga_makanan[2] = 40000;
+    harga_minuman[29] = 0;
     harga_minuman[0] = 7000;
     harga_minuman[1] = 15000;
     harga_minuman[2] = 7000;
 
     bool is_lanjut = true;
+    bool kondisiHapus;
     int i, pilih;
+    int seleksiHapus;
     float total_pesanan;            //Total harga saat rekap
     std::string placeholderNama;
     bool tambahMenuBaru;
@@ -58,12 +65,12 @@ int main() {
         switch (pilih) {
 
             case 1:
-                std::cout << "-----------------------\n";
+                std::cout << "----------------------------------------\n";
                 for (i = 0; i < n_makanan; i++) {
                     std::cout << makanan[i] << " (kode: " << i << ")\n";
                 }
                 //Loop diatas akan output list menu makanan ke console (Danial)
-                std::cout << "-----------------------\n";
+                std::cout << "----------------------------------------\n";
                 std::cout << "Input kode: ";
                 std::cin >> pesanan_makanan[n_pesan_makanan];
                 std::cout << '\n';
@@ -71,11 +78,11 @@ int main() {
                 break;
 
             case 2:
-                std::cout << "-----------------------\n";
+                std::cout << "----------------------------------------\n";
                 for (i = 0; i < n_minuman; i++) {
                     std::cout << minuman[i] << " (kode: " << i << ")\n";
                 }
-                std::cout << "-----------------------\n";
+                std::cout << "----------------------------------------\n";
                 std::cout << "Input kode: ";
                 std::cin >> pesanan_minuman[n_pesan_minuman];
                 std::cout << '\n';
@@ -83,7 +90,7 @@ int main() {
                 break;
             case 3:
                 total_pesanan = 0;
-                std::cout << "----------makanan-------------\n";
+                std::cout << "---------------makanan------------------\n";
                 for (i = 0; i < n_pesan_makanan; i++) {
                     std::cout << makanan[pesanan_makanan[i]];
                     std::cout << " (harga: ";
@@ -91,7 +98,7 @@ int main() {
                     std::cout << ")\n";
                     total_pesanan += harga_makanan[pesanan_makanan[i]];
                 }
-                std::cout << "----------minuman-------------\n";
+                std::cout << "---------------minuman------------------\n";
                 for (i = 0; i < n_pesan_minuman; i++) {
                     std::cout << minuman[pesanan_minuman[i]];
                     std::cout << " (harga: ";
@@ -99,28 +106,53 @@ int main() {
                     std::cout << ")\n";
                     total_pesanan += harga_minuman[pesanan_minuman[i]];
                 }
-                std::cout << "-----------total--------------\n";
+                std::cout << "----------------total-------------------\n";
                 std::cout << "Total: " << total_pesanan << std::endl;
-                std::cout << "------------------------------\n\n";
+                std::cout << "----------------------------------------\n\n";
                 break;
             case 4:
                 is_lanjut = false;
                 break;
             case 5:
                 //Hapus pesanan (Danial)
-                int seleksiHapus;
-                //for(int iterationJumlahPesananMakanan = 0 ; iterationJumlahPesananMakanan < n_pesan_makanan ; iterationJumlahPesananMakanan++){
-                //    std::cout<<iterationJumlahPesananMakanan+1<<". "<<pesanan_makanan[iterationJumlahPesananMakanan]<<'\n';
-                //}
-                for (i = 0; i < n_pesan_makanan; i++) {
-                    std::cout << i+1 << ". " << makanan[pesanan_makanan[i]] << " (Kode: "<< i << ")\n";
+                kondisiHapus = true;
+                while(kondisiHapus)
+                {
+                    int hapusPesanan;
+                    std::cout<<"Anda ingin menghapus pesanan makanan atau minuman?\n1. Pesanan makanan\n2. Pesanan minuman\nInput: ";
+                    std::cin>>hapusPesanan;
+                    std::cout<<'\n';
+                    if(hapusPesanan == 1)
+                    {
+                        for (i = 0; i < n_pesan_makanan; i++) {
+                            std::cout << i+1 << ". " << makanan[pesanan_makanan[i]] << " (Kode: "<< i << ")\n";
+                        }
+                        std::cout<<"Pesanan mana yang ingin anda hapus?\n";
+                        std::cout << "Input kode: ";
+                        std::cin>>seleksiHapus;
+                        pesanan_makanan[seleksiHapus] = 29;
+                        std::cout << '\n';
+                        kondisiHapus = false;
+                        //Array makanan[-1] maybe out of bound (Not good practice) (Danial)
+                    }
+                    else if(hapusPesanan == 2)
+                    {
+                        for (i = 0; i < n_pesan_minuman; i++) {
+                            std::cout << i+1 << ". " << minuman[pesanan_minuman[i]] << " (Kode: "<< i << ")\n";
+                        }
+                        std::cout<<"Pesanan mana yang ingin anda hapus?\n";
+                        std::cout << "Input kode: ";
+                        std::cin>>seleksiHapus;
+                        pesanan_minuman[seleksiHapus] = 29;
+                        std::cout << '\n';
+                        kondisiHapus = false;
+                    }
+                    else
+                    {
+                        std::cout<<"Input yang anda masukan tidak terdefinisi, silahkan coba lagi.\n";
+                        kondisiHapus = true;
+                    }
                 }
-                std::cout<<"Pesanan mana yang ingin anda hapus?\n";
-                std::cout << "Input kode: ";
-                std::cin>>seleksiHapus;
-                pesanan_makanan[seleksiHapus] = -1;
-                std::cout << '\n';
-                //Array makanan[-1] maybe out of bound (Not good practice) (Danial)
                 break;
             case 6:
                 //Tambah menu baru (Danial)
@@ -180,6 +212,8 @@ int main() {
                     }
                 }
                 break;
+            case 7:
+            case 8:
             default:
                 std::cout<<"Input yang anda masukan tidak terdefinisi, silahkan coba lagi.\n";
                 break;
